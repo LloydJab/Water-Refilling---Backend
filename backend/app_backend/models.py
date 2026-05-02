@@ -1,14 +1,20 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
-class Account(models.Model):
-    username = models.CharField(max_length=255)
-    password = models.CharField(max_length=255)
+class Account(AbstractUser):
+    # Add extra fields if needed
+    phone_number = models.CharField(max_length=20, blank=True, null=True)
+    address = models.CharField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return self.username
 
 class Inventory(models.Model): 
-    umbrella_cap = models.IntegerField()
-    gallon = models.IntegerField()
-    gallon_cap = models.IntegerField()
-    cap_sticker = models.IntegerField()
-    rock_salt = models.IntegerField()
+    product_1 = models.IntegerField(default=50)  # Used 5 Liter Purified Water
+    product_2 = models.IntegerField(default=50)  # New 5 Liter Purified Water
+    product_3 = models.IntegerField(default=50)  # Used 10 Liter Purified Water
+    product_4 = models.IntegerField(default=50)  # New 10 Liter Purified Water
+    product_5 = models.IntegerField(default=50)  # Used 20 Liter Empty Container
+    product_6 = models.IntegerField(default=50)  # New 20 Liter Empty Container
     
