@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from .models import Account
-from .models import Inventory
+from .models import Account, Inventory, Order, Product
 
 class AccountSerializer(serializers.ModelSerializer):
     class Meta:
@@ -21,3 +20,14 @@ class InventorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Inventory
         fields = '__all__'
+
+class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = '__all__'
+
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = '__all__'
+
