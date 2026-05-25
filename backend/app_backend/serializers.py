@@ -6,7 +6,7 @@ class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
         fields = ['id', 'username', 'password', 'email']
-        # extra_kwargs = {'password': {'write_only': True}}
+        extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
         user = Account(
@@ -16,6 +16,7 @@ class AccountSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
+
 
 class InventorySerializer(serializers.ModelSerializer):
     class Meta:
