@@ -43,4 +43,11 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
-
+
+class Maintenance(models.Model):
+    liters_since_last_service = models.IntegerField(default=0)
+    capacity = models.IntegerField(default=2650)
+    last_serviced_at = models.DateTimeField(null=True, blank=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return f"Maintenance: {self.liters_since_last_service}/{self.capacity}L"

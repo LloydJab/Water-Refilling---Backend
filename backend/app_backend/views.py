@@ -2,9 +2,10 @@ from rest_framework import viewsets, status, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
-
-from .models import Account, Inventory, Order, Product
-from .serializers import AccountSerializer, InventorySerializer, OrderSerializer, ProductSerializer
+from rest_framework.decorators import action
+from django.utils import timezone
+from .models import Account, Inventory, Maintenance, Order, Product
+from .serializers import AccountSerializer, InventorySerializer, MaintenanceSerializer, OrderSerializer, ProductSerializer
 
 
 class AccountViewSet(viewsets.ModelViewSet):
@@ -30,7 +31,17 @@ class RegisterView(APIView):
             status=status.HTTP_201_CREATED,
         )
 
-
+class MaintenanceViewSet(viewsets.ModelViewSet):
+    queryset = Maintenance.objects.all()
+    serializer_class = MaintenanceSerializer
+    @action(detail=True, methods=['post'])
+    def reset(self, request, pk=None):
+        maintenance = self.get_object()
+        maintenance.liters_since_last_service = 0
+        maintenance.last_serviced_at = timezone.now()
+        maintenance.save()
+        return Response(MaintenanceSerializer(maintenance).data)
+    
 class InventoryViewSet(viewsets.ModelViewSet):
     queryset = Inventory.objects.all()
     serializer_class = InventorySerializer
