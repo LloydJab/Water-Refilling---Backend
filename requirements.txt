@@ -1,0 +1,14 @@
+Django>=4.2,<5.0
+djangorestframework>=3.15
+django-cors-headers>=4.3
+scikit-learn>=1.4
+joblib>=1.4
+numpy>=1.26
+pandas>=2.2
+python-dotenv>=1.0
+djangorestframework-simplejwt>=5.3
+channels>=4.0
+daphne>=4.0
+
+#install using
+#pip install -r requirements.txt

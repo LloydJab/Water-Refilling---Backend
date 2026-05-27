@@ -18,3 +18,7 @@ venv/
 # IDE/project files
 .vscode/
 .idea/
+
+.env
+*.pkl
+*.joblib
