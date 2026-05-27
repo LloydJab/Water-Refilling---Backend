@@ -64,8 +64,8 @@ class OrderSerializer(serializers.ModelSerializer):
                     Maintenance.objects.filter(pk=maintenance.pk).update(
                         liters_since_last_service=models.F('liters_since_last_service') + total_liters
                     )
-            # 5. Broadcast update to dashboard, and to all WEbSocket clients
 
+            # 5. Broadcast update to dashboard, and to all WEbSocket clients
             channel_layer = get_channel_layer()
             async_to_sync(channel_layer.group_send)(
                 'dashboard',
