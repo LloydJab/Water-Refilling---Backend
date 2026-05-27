@@ -7,17 +7,23 @@ Django REST Framework backend with JWT auth, WebSocket support, and ML sales for
 - Django Channels (WebSocket)
 - JWT Authentication (SimpleJWT)
 - scikit-learn (SGDRegressor — 7-day revenue forecast)
-- SQLite (dev) / PostgreSQL (prod)
+- SQLite
 
 ## Team Members
-- [your names here]
+- Cellan, Leifvash Aaron
+- Jabagat, Christian Lloyd
+- Zurita, Rishi Rayland
+- Posadas, Charles
+- Samar, Rhea
 
 ## Quickstart
 
 git clone https://github.com/LloydJab/Water-Refilling---Backend.git
 cd Water-Refilling---Backend/backend
 python -m venv .venv
-.venv\Scripts\activate        # Windows
+.venv\Scripts\activate       
+
+# Windows
 pip install -r requirements.txt
 python manage.py migrate
 daphne -p 8000 backend.asgi:application
