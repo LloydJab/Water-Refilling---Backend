@@ -1,14 +1,16 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from .models import Account, Inventory
-from .serializers import AccountSerializer, InventorySerializer
+from .models import Account, Inventory, Order, Product
+from .serializers import AccountSerializer, InventorySerializer, OrderSerializer, ProductSerializer
+
 
 class AccountViewSet(viewsets.ModelViewSet):
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
+
 
 class RegisterView(APIView):
     authentication_classes = []
@@ -28,7 +30,20 @@ class RegisterView(APIView):
             status=status.HTTP_201_CREATED,
         )
 
+
 class InventoryViewSet(viewsets.ModelViewSet):
     queryset = Inventory.objects.all()
     serializer_class = InventorySerializer
+    permission_classes = [permissions.AllowAny]
 
+
+class OrderViewSet(viewsets.ModelViewSet):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    permission_classes = [permissions.AllowAny]
+
+
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    permission_classes = [permissions.AllowAny]
