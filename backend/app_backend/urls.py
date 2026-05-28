@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import AccountViewSet, InventoryViewSet, RegisterView, OrderViewSet, ProductViewSet, MaintenanceViewSet, predictions
+from .views import AccountViewSet, InventoryViewSet, RegisterView, OrderViewSet, ProductViewSet, MaintenanceViewSet, predictions, train_model
 
 router = DefaultRouter()
 router.register(r'accounts', AccountViewSet)
@@ -13,4 +13,5 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('predictions/', predictions, name='predictions'),
     path('', include(router.urls)),
+    path('train/', train_model, name='train-model'),
 ]

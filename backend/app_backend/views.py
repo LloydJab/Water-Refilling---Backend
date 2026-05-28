@@ -114,3 +114,44 @@ def predictions(request):
             'trained_on': f"{Order.objects.count()} orders",
         }
     })
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def train_model(request):
+    orders = Order.objects.all()
+    if orders.count() < 5:
+        return Response({'error': 'Not enough orders to train'}, status=400)
+
+    import pandas as pd
+    from sklearn.linear_model import SGDRegressor
+    import re
+
+    data = []
+    for order in orders:
+        try:
+            date = datetime.strptime(order.date, '%m/%d/%Y')
+        except:
+            continue
+        data.append({
+            'day_of_week': date.weekday(),
+            'day_of_month': date.day,
+            'month': date.month,
+            'is_weekend': 1 if date.weekday() >= 5 else 0,
+            'order_type_encoded': 0 if order.orderType == 'walk-in' else 1,
+            'revenue': float(order.totalAmount),
+        })
+
+    df = pd.DataFrame(data)
+    X = df[['day_of_week', 'day_of_month', 'month', 'is_weekend', 'order_type_encoded']]
+    y = df['revenue']
+
+    model = SGDRegressor(max_iter=1000, random_state=42)
+    model.fit(X, y)
+
+    MODEL_PATH = os.path.join(settings.BASE_DIR, "app_backend", "sales_model.pkl")
+    joblib.dump(model, MODEL_PATH)
+
+    return Response({
+        'message': 'Model trained successfully',
+        'orders_used': len(data),
+    })
